@@ -1,0 +1,13 @@
+%section#about
+  - @abouts.reverse_each do |about|
+    %article.about{:id => "about-#{about.id}"}
+      %ul#artykuly.box
+        %li
+          %header#tytul.artykuly-post
+            %h1= about.name
+        %li
+          %p#tresc= raw about.content
+        %br/
+        %em
+          = link_to 'Edycja', edit_about_path(about)
+          | #{link_to 'Back', articles_path}

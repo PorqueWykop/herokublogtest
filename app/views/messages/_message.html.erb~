@@ -1,0 +1,10 @@
+<div class="message">
+  <div class="created_at"><%= message.created_at.strftime("%B %d, %Y") %></div>
+  <div class="content">
+    <%= raw link_to message.content, [@article, message] %>
+  </div>
+  <div class="actions">
+    <%= link_to "Reply", new_article_message_path(@article, :parent_id => message) %> |
+    <%= link_to "Destroy", [@article, message], :confirm => "Are you sure?", :method => :delete %>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+%p#notice= notice
+%section
+  %article.news{:id => "news-#{@article.id}"}
+    %ul#artykuly
+      %li
+        %header#tytul.artykuly-post
+          %h1= @article.name
+      %li
+        %p#tresc= raw @article.content
+        %br/
+        = @article.created_at.strftime("%d %b. %Y")
+        = @article.created_at.strftime("%H:%M") 
+        %em
+          = link_to 'Edycja', edit_article_path(@article)
+          | #{link_to 'Back', articles_path}
+
+%section#komentarze
+  %article
+    %header
+      %h1 Komentarze:
+      -if @article.messages.arrange.count == 0
+        %p Brak Komentarzy! Badz pierwszy!
+      -else
+        = nested_messages @article.messages.arrange(:order => :created_at)
+
+%br/
+
+
+#nowykomentarz
+  %b
+    = form_for ([@article, Message.new]) do |f|
+      = f.error_messages
+      = f.hidden_field :parent_id
+      %p
+        = f.label :content, "Nowy Komentarz"
+        %br/
+        = f.text_area :content, :rows => 8
+      %p= raw f.submit "Post Message"
